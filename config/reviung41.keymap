@@ -36,7 +36,7 @@
         combo_mouse_mode {
             timeout-ms = <50>;
             key-positions = <9 10 11 12>;
-            bindings = <&tog MOUSE>
+            bindings = <&tog MOUSE>;
         }
     }
 
