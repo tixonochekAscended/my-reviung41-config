@@ -8,74 +8,97 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/rgb.h>
+#include <dt-bindings/zmk/mouse.h>
 
 #define DEFAULT 0
 #define LOWER   1
 #define RAISE   2
-#define ADJUST  3
+#define MOUSE 3
+#define ADJUST  4
 
 / {
-        keymap {
-                compatible = "zmk,keymap";
+    combos {
+        compatible = "zmk,combos";
 
-                default_layer {
-                        display-name = "Default";
-// -------------------------------------------------------------------------------------
-// |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  |    ` / ~     |
-// | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |      '      |
-// | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  |    RALT     |
-//                          | ALT | LWR | SPC | RSE  | GUI |
-                        bindings = <
-   &kp TAB   &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I   &kp O    &kp P    &kp GRAVE
-   &kp LCTRL &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K   &kp L    &kp SEMI &kp SQT
-   &kp LSHFT &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RALT
-                        &kp LALT &mo LOWER &kp SPACE &mo RAISE &kp LGUI
-                        >;
-                };
+        combo_space {
+            timeout-ms = <50>;
+            key-positions = <20 21 31>;
+            bindings = <&kp SPACE>;
+            layers = <0 1 2>;
+        }
 
-                lower_layer {
-                        display-name = "Lower";
-// ------------------------------------------------------------------------------------
-// |      |  !  |  @  |  #  |  $  |  %  |   | HOME|  UP  | END | VOL+| VOL-|   MUTE    |
-// |      |  ^  |  &  |  * |  (  |  )  |   | LFT | DOWN | RGT | P/P | PREV|   NEXT    |
-// |      |     |     | ESC | DEL |     |   |  _  |  +  |  {  |  }  |  |  |           |
-//                          |     |     | RET |     |     |
-                        bindings = <
-   &trans &kp EXCL  &kp AT    &kp HASH &kp DLLR &kp PRCNT    &kp HOME  &kp UP    &kp END   &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE
-   &trans &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR    &kp LEFT  &kp DOWN  &kp RIGHT &kp C_PP     &kp C_PREV   &kp C_NEXT
-   &trans &trans    &trans    &kp ESC  &kp DEL  &trans       &kp UNDER &kp PLUS  &kp LBRC  &kp RBRC     &kp PIPE     &trans
-                                       &trans &trans &kp RET &trans &trans
-                        >;
-                };
+        combo_undo {
+            timeout-ms = <50>;
+            key-positions = <26 27>;
+            bindings = <&kp LC(Z)>;
+        }
 
-                raise_layer {
-                        display-name = "Raise";
-// ----------------------------------------------------------------------------
-// | ADJST|  1  |  2  |  3  |  4  |  5  |   | F1  | F2  | F3  | F4  | F5  |   F6   |
-// |      |  6  |  7  |  8  |  9  |  0  |   | F7  | F8  | F9  | F10 | F11 |   F12  |
-// |      |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  RALT  |
-//                          |     |     | BSPC |    |     |
-                        bindings = <
-   &mo ADJUST &kp N1 &kp N2 &kp N3 &kp N4 &kp N5    &kp F1    &kp F2    &kp F3    &kp F4    &kp F5   &kp F6
-   &trans     &kp N6 &kp N7 &kp N8 &kp N9 &kp N0    &kp F7    &kp F8    &kp F9    &kp F10   &kp F11  &kp F12
-   &trans     &trans &trans &trans &trans &trans    &kp MINUS &kp EQUAL &kp LBKT  &kp RBKT  &kp BSLH &kp RALT
-                               &trans &trans &kp BSPC &trans &trans
-                        >;
-                };
+        combo_mouse_mode {
+            timeout-ms = <50>;
+            key-positions = <9 10 11 12>;
+            bindings = <&tog MOUSE>
+        }
+    }
 
-                adjust_layer {
-                        display-name = "Adjust";
-// -----------------------------------------------------------------------------------------
-// | BT 1     | BT 2     | BT 3     | BT 4     |      |         |   |       |     |     |     |     |        |
-// |          |          |          |          |      |  BT 0   |   |       |     |     |     |     |        |
-// |          |          | BT_CLRALL|  BT_CLR  |      |         |   | RESET |     |     |     |     |        |
-//                                             |      |         |   |       |     |     |
-                        bindings = <
-   &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none &none           &none       &none &none &none &none &none
-   &none        &none        &none        &none        &none &bt BT_SEL 0    &none       &none &none &none &none &none
-   &none        &none        &bt BT_CLR_ALL &bt BT_CLR &none &none           &sys_reset  &none &none &none &none &none
-                                                       &trans &trans &none &trans &trans
-                        >;
-                };
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            display-name = "Default";
+            bindings = <
+&kp TAB   &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I   &kp O    &kp P    &kp GRAVE
+&kp LCTRL &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K   &kp L    &kp SEMI &kp SQT
+&kp LSHFT &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RALT
+                &kp LALT &mo LOWER &kp SPACE &mo RAISE &kp LGUI
+            >;
         };
+
+        lower_layer {
+            display-name = "Lower";
+            bindings = <
+&trans &kp EXCL  &kp AT    &kp HASH &kp DLLR &kp PRCNT    &kp HOME  &kp UP    &kp END   &kp C_VOL_UP &kp C_VOL_DN &kp C_MUTE
+&trans &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR    &kp LEFT  &kp DOWN  &kp RIGHT &kp C_PP     &kp C_PREV   &kp C_NEXT
+&trans &trans    &trans    &kp ESC  &kp DEL  &trans       &kp UNDER &kp PLUS  &kp LBRC  &kp RBRC     &kp PIPE     &trans
+                                    &trans &trans &kp RET &trans &trans
+            >;
+        };
+
+        raise_layer {
+            display-name = "Raise";
+            bindings = <
+&mo ADJUST &kp N1 &kp N2 &kp N3 &kp N4 &kp N5    &kp F1    &kp F2    &kp F3    &kp F4    &kp F5   &kp F6
+&trans     &kp N6 &kp N7 &kp N8 &kp N9 &kp N0    &kp F7    &kp F8    &kp F9    &kp F10   &kp F11  &kp F12
+&trans     &trans &trans &trans &trans &trans    &kp MINUS &kp EQUAL &kp LBKT  &kp RBKT  &kp BSLH &kp RALT
+                    &trans &trans &kp BSPC &trans &trans
+            >;
+        };
+
+        mouse_layer {
+            display-name = "Mouse";
+            bindings = <
+&none &msc SCRL_UP &mmv MOVE_UP &msc SCRL_DOWN &none &none   &none &none &none &none &none &none
+&none &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &none &none   &none &none &none &none &none &none
+&none &mkp MB3 &none &none &none &none   &none &none &none &none &none &none
+                    &mkp MB2 &mkp MB1 &none &none &none
+            >;
+        };
+
+        adjust_layer {
+            display-name = "Adjust";
+            bindings = <
+&bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none &none           &none       &none &none &none &none &sys_reset
+&none        &none        &none        &none        &none &bt BT_SEL 0    &none       &none &none &none &none &none
+&none        &none        &bt BT_CLR_ALL &bt BT_CLR &none &none           &none  &none &none &none &none &none
+                                        &none &none &none &none &none
+            >;
+        };
+    };
 };
+
+/*
+empty keymap preset:
+&none &none &none &none &none &none   &none &none &none &none &none &none
+&none &none &none &none &none &none   &none &none &none &none &none &none
+&none &none &none &none &none &none   &none &none &none &none &none &none
+                    &none &none &none &none &none
+*/
