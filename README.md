@@ -1,5 +1,5 @@
 ## My Reviung41
-🧰 A custom 40% mechanical keyboard that I've soldered and assembled myself. A hand-crafted tool that makes programming as comfortable as never before. [Credit for the PCB and the Reviung in itself goes to gtips](https://github.com/gtips/reviung).
+🧰 A custom 40% mechanical keyboard that I've soldered and assembled myself. A hand-crafted tool that makes programming more comfortable than ever. [Credit for the PCB and the Reviung in itself goes to gtips](https://github.com/gtips/reviung).
 
 ### What I used
 * The Reviung PCB
